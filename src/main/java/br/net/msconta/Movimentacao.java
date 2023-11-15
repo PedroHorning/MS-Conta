@@ -1,33 +1,48 @@
 package br.net.msconta;
 
-import javax.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "movimentacoes")
 public class Movimentacao {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_movimentacao")
+    private Integer id;
 
+    @Column(name = "data_hora")
     private LocalDateTime dataHora;
 
-    private String tipo; // depósito, saque, transferência
+    @Column(name = "tipo")
+    private String tipo;
 
-    private String clienteOrigemDestino; // preencher em caso de transferência
+    @Column(name = "valor")
+    private Double valor;
 
-    private double valor;
+    @Column(name = "id_conta_origem")
+    private Integer idContaOrigem;
 
-    @ManyToOne
-    private Conta conta;
+    @Column(name = "id_conta_destino")
+    private Integer idContaDestino;
 
-    // Getters e Setters
+    @Column(name = "id_cliente_origem")
+    private Integer idClienteOrigem;
 
-    public Long getId() {
+    @Column(name = "id_cliente_destino")
+    private Integer idClienteDestino;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -47,39 +62,43 @@ public class Movimentacao {
         this.tipo = tipo;
     }
 
-    public String getClienteOrigemDestino() {
-        return clienteOrigemDestino;
-    }
-
-    public void setClienteOrigemDestino(String clienteOrigemDestino) {
-        this.clienteOrigemDestino = clienteOrigemDestino;
-    }
-
-    public double getValor() {
+    public Double getValor() {
         return valor;
     }
 
-    public void setValor(double valor) {
+    public void setValor(Double valor) {
         this.valor = valor;
     }
 
-    public Conta getConta() {
-        return conta;
+    public Integer getIdContaOrigem() {
+        return idContaOrigem;
     }
 
-    public void setConta(Conta conta) {
-        this.conta = conta;
+    public void setIdContaOrigem(Integer idContaOrigem) {
+        this.idContaOrigem = idContaOrigem;
     }
 
-    @Override
-    public String toString() {
-        return "Movimentacao{" +
-                "id=" + id +
-                ", dataHora=" + dataHora +
-                ", tipo='" + tipo + '\'' +
-                ", clienteOrigemDestino='" + clienteOrigemDestino + '\'' +
-                ", valor=" + valor +
-                ", conta=" + conta +
-                '}';
+    public Integer getIdContaDestino() {
+        return idContaDestino;
+    }
+
+    public void setIdContaDestino(Integer idContaDestino) {
+        this.idContaDestino = idContaDestino;
+    }
+
+    public Integer getIdClienteOrigem() {
+        return idClienteOrigem;
+    }
+
+    public void setIdClienteOrigem(Integer idClienteOrigem) {
+        this.idClienteOrigem = idClienteOrigem;
+    }
+
+    public Integer getIdClienteDestino() {
+        return idClienteDestino;
+    }
+
+    public void setIdClienteDestino(Integer idClienteDestino) {
+        this.idClienteDestino = idClienteDestino;
     }
 }

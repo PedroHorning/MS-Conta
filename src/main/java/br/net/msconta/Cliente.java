@@ -1,27 +1,32 @@
 package br.net.msconta;
 
-import javax.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "clientes")
 public class Cliente {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_cliente")
+    private Integer id;
 
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "cpf")
     private String cpf;
 
-    @OneToOne(mappedBy = "cliente")
-    private Conta conta;
-
-    // Getters e Setters
-
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -39,23 +44,5 @@ public class Cliente {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public Conta getConta() {
-        return conta;
-    }
-
-    public void setConta(Conta conta) {
-        this.conta = conta;
-    }
-
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", conta=" + conta +
-                '}';
     }
 }

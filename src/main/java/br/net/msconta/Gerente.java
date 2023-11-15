@@ -1,28 +1,32 @@
 package br.net.msconta;
 
-import javax.persistence.*;
-import java.util.List;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "gerentes")
 public class Gerente {
 
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @Column(name = "id_gerente")
+    private Integer id;
 
+    @Column(name = "nome")
     private String nome;
+
+    @Column(name = "cpf")
     private String cpf;
 
-    @OneToMany(mappedBy = "gerente")
-    private List<Conta> contas;
-
-    // Getters e Setters
-
-    public Long getId() {
+    public Integer getIdCliente() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setIdCliente(Integer id) {
         this.id = id;
     }
 
@@ -40,23 +44,5 @@ public class Gerente {
 
     public void setCpf(String cpf) {
         this.cpf = cpf;
-    }
-
-    public List<Conta> getContas() {
-        return contas;
-    }
-
-    public void setContas(List<Conta> contas) {
-        this.contas = contas;
-    }
-
-    @Override
-    public String toString() {
-        return "Gerente{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", contas=" + contas +
-                '}';
     }
 }
