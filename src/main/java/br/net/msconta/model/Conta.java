@@ -1,4 +1,6 @@
-package br.net.msconta;
+package br.net.msconta.model;
+
+import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -6,12 +8,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import java.time.LocalDate;
 
 @Entity
 @Table(name = "conta")
 public class Conta {
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_conta")
     private Integer id;
@@ -30,7 +31,7 @@ public class Conta {
 
     @Column(name = "id_gerente")
     private Long idGerente;
-    
+
     @Column(name = "saldo")
     private Double saldo;
 
@@ -81,7 +82,7 @@ public class Conta {
     public void setIdGerente(Long idGerente) {
         this.idGerente = idGerente;
     }
-    
+
     public Double getSaldo() {
         return saldo;
     }
