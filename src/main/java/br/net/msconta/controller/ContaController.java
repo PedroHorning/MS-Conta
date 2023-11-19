@@ -17,13 +17,13 @@ import br.net.msconta.model.Conta;
 import br.net.msconta.repository.ContaRepository;
 
 @RestController
-@RequestMapping("/api/conta")
+@RequestMapping("api/conta")
 public class ContaController {
 
     @Autowired
     private ContaRepository contaRepository;
 
-    @CrossOrigin(origins = "*")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
     public List<Conta> getAllConta() {
         return contaRepository.findAll();
