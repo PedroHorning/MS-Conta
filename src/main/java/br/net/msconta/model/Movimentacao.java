@@ -9,8 +9,8 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
-@Entity
 @Table(name = "movimentacoes")
+@Entity(name = "movimentacoes")
 public class Movimentacao {
 
     @Id

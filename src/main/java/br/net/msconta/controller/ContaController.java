@@ -1,8 +1,10 @@
 package br.net.msconta.controller;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,11 +15,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.net.msconta.dto.AccountResponseDTO;
 import br.net.msconta.model.Conta;
 import br.net.msconta.repository.ContaRepository;
 
 @RestController
-@RequestMapping("api/conta")
+@RequestMapping("/api/conta")
 public class ContaController {
 
     @Autowired
@@ -25,8 +28,11 @@ public class ContaController {
 
     @CrossOrigin(origins = "*", allowedHeaders = "*")
     @GetMapping
-    public List<Conta> getAllConta() {
-        return contaRepository.findAll();
+    public ResponseEntity<List<AccountResponseDTO>> getAll() {
+        List<AccountResponseDTO> customerList = contaRepository.findAll().stream()
+                .map(AccountResponseDTO::new)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(customerList);
     }
 
     @CrossOrigin(origins = "*")
