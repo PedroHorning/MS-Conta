@@ -1,6 +1,8 @@
 package com.example.msaccount.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -46,6 +48,7 @@ public class AccountController {
     @PostMapping
     public ResponseEntity<AccountResponseDTO> saveAccount(@ModelAttribute AccountRequestDTO data) {
         Account accountData = new Account(data);
+        accountData.setIdGerente(getIdGerenteMenosClientes());
         accountData = accountCommandService.createAccount(accountData);
         AccountResponseDTO responseDTO = new AccountResponseDTO(accountData);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseDTO);
@@ -93,5 +96,28 @@ public class AccountController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    public Long getIdGerenteMenosClientes() {
+        List<Account> todasAsContas = accountQueryService.getAllAccount();
+
+        Map<Long, Integer> contagemClientesPorGerente = new HashMap();
+
+        for (Account conta : todasAsContas) {
+            Long idGerente = conta.getIdGerente();
+            contagemClientesPorGerente.put(idGerente, contagemClientesPorGerente.getOrDefault(idGerente, 0) + 1);
+        }
+
+        Long idMenosClientes = null;
+        int menorNumeroDeClientes = Integer.MAX_VALUE;
+
+        for (Map.Entry<Long, Integer> entry : contagemClientesPorGerente.entrySet()) {
+            if (entry.getValue() < menorNumeroDeClientes) {
+                menorNumeroDeClientes = entry.getValue();
+                idMenosClientes = entry.getKey();
+            }
+        }
+
+        return idMenosClientes;
     }
 }
