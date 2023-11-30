@@ -1,5 +1,6 @@
 package com.example.msaccount.rabbitmq;
 
+import com.example.msaccount.controller.AccountController;
 import com.example.msaccount.dto.AccountRequestDTO;
 import com.example.msaccount.dto.AccountResponseDTO;
 import com.example.msaccount.model.Account;
@@ -18,13 +19,13 @@ public class RMQListener {
     private RabbitTemplate rabbitTemplate;
 
     @Autowired
-    private AccountCommandService accountCommandService;
+    private AccountController accountController;
 
     @RabbitListener(queues = "saga.autocadastro.account-req")
-    public void onAutoRegisterCustomerRes(AccountRequestDTO data) {
-        Account account = new Account(data);
-        Account createdAccount = accountCommandService.createAccount(account);
-        AccountResponseDTO accountResponseDTO =  new AccountResponseDTO(createdAccount);
+    public void onAutoRegisterAccountReq(AccountRequestDTO data) {
+        System.out.println("ACCOUNT DATA NO MS ACCOUNT: "+data);
+        ResponseEntity<AccountResponseDTO> accountResponse  = accountController.saveAccount(data);
+        AccountResponseDTO accountResponseDTO = accountResponse.getBody();
 
         String routingKey = "saga.autocadastro.account-res";
         rabbitTemplate.convertAndSend(routingKey, accountResponseDTO);
